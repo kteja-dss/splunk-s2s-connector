@@ -1,9 +1,8 @@
 # Confluent for Kubernetes Scenario Examples
 
-This GitHub repository accompanies the official [Confluent for Kubernetes documentation](https://docs.confluent.io/operator/current/overview.html).
+More info can be found on [Confluent for Kubernetes documentation](https://docs.confluent.io/operator/current/overview.html).
 
-This repository contains scenario workflows to deploy and manage Confluent
-on Kubernetes for various use cases.
+This repository contains simple schenario and can be customised with respect to the prod requirements
 
 ## Prerequisites
 
