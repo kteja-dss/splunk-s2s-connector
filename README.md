@@ -23,8 +23,9 @@ The following prerequisites are assumed for each scenario workflow:
 
 # Next Steps
 
-- Clone this repo ''
-- Update the properties of the files ccloud-credentials.txt and ccloud-sr-credentials.txt
+- Clone this repo "https://github.com/kteja-dss/splunk-s2s-connector/edit/main/README.md"
+- Open terminal in the repo directory
+- Update the credentials in the files ccloud-credentials.txt and ccloud-sr-credentials.txt
 - Create secrets for cloud and connect
 
   ```
