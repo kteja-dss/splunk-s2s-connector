@@ -41,6 +41,10 @@ The following prerequisites are assumed for each scenario workflow:
   ```
   kubectl apply -f connect.yaml
   ```
+- Portforward the connector to send the api request
+  ```
+  kubectl port-forward connect-0 8083
+  ```
 - Setup the connector by sending a post request using the following command
 
   ```
