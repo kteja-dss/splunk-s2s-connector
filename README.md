@@ -16,10 +16,6 @@ The following prerequisites are assumed for each scenario workflow:
   ```
   kubectl config set-context --current --namespace=confluent
   ```
-- This repo cloned to your workstation:
-  ```
-  git clone git@github.com:confluentinc/confluent-kubernetes-examples.git
-  ```
 
 # Next Steps
 
