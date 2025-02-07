@@ -16,10 +16,32 @@ The following prerequisites are assumed for each scenario workflow:
   ```
   kubectl config set-context --current --namespace=confluent
   ```
+- Set up the Helm Chart:
+
+  ```
+  helm repo add confluentinc https://packages.confluent.io/helm
+  ```
+
+  Install Confluent For Kubernetes using Helm:
+
+  ```
+  helm upgrade --install operator confluentinc/confluent-for-kubernetes -n confluent
+  ```
+
+  Check that the Confluent For Kubernetes pod comes up and is running:
+
+  ```
+  kubectl get pods -n confluent
+  ```
+
+- This repo cloned to your workstation:
+  ```
+  git clone git@github.com:confluentinc/confluent-kubernetes-examples.git
+  ```
 
 # Next Steps
 
-- Clone this repo "https://github.com/kteja-dss/splunk-s2s-connector.git"
+- Clone this repo "https://github.com/kteja-dss/splunk-s2s-connector/edit/main/README.md"
 - Open terminal in the repo directory
 - Update the credentials in the files ccloud-credentials.txt and ccloud-sr-credentials.txt
 - Create secrets for cloud and connect
@@ -70,3 +92,31 @@ The following prerequisites are assumed for each scenario workflow:
   ```
   http://localhost:8083/connectors/splunk-s2s-source/status
   ```
+- docker run -d -p 9998:9997 -e "SPLUNK_START_ARGS=--accept-license" -e "SPLUNK_PASSWORD=password" --name splunk-uf splunk/universalforwarder:9.0.0
+
+- Create a log file `splunk-s2s-test.log` and add following events to it
+  ```
+  log event 1
+  log event 2
+  log event 3
+  ```
+- Copy the logfile and mount it with the docker container
+  ```
+  docker cp splunk-s2s-test.log splunk-uf:/opt/splunkforwarder/splunk-s2s-test.log
+  ```
+- Configure the UF to monitor the splunk-s2s-test.log file:
+  ```
+  docker exec -it splunk-uf sudo ./bin/splunk add monitor -source /opt/splunkforwarder/splunk-s2s-test.log -auth admin:password
+  ```
+- Configure the UF to connect to Splunk S2S Source connector:
+
+  - For Mac/Windows systems:
+
+    ```
+    docker exec -it splunk-uf sudo ./bin/splunk add forward-server host.docker.internal:9997
+    ```
+
+  - For Linux systems:
+    ```
+    docker exec -it splunk-uf sudo ./bin/splunk add forward-server 172.17.0.1:9997
+    ```
