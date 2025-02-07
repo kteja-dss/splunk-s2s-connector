@@ -92,8 +92,10 @@ The following prerequisites are assumed for each scenario workflow:
   ```
   http://localhost:8083/connectors/splunk-s2s-source/status
   ```
-- docker run -d -p 9998:9997 -e "SPLUNK_START_ARGS=--accept-license" -e "SPLUNK_PASSWORD=password" --name splunk-uf splunk/universalforwarder:9.0.0
-
+- Run Splunk forwarder docker image
+  ```
+  docker run -d -p 9998:9997 -e "SPLUNK_START_ARGS=--accept-license" -e "SPLUNK_PASSWORD=password" --name splunk-uf splunk/universalforwarder:9.0.0
+  ```
 - Create a log file `splunk-s2s-test.log` and add following events to it
   ```
   log event 1
