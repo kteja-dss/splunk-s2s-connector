@@ -2,8 +2,11 @@
 apiVersion: platform.confluent.io/v1beta1
 kind: Connect
 metadata:
-  name: connect
+  name: connect-0
 spec:
+  podTemplate:
+    labels:
+      appName: splunk-connect
   replicas: 1
   image:
     application: confluentinc/cp-server-connect:7.8.0
@@ -19,11 +22,11 @@ spec:
           version: 2.1.1
   dependencies:
     kafka:
-      bootstrapEndpoint: <CONFLUENT_CLOUD_BOOTSTRAP_SERVER>
+      bootstrapEndpoint: <BOOTSTRAP_URL>
       authentication:
         type: plain
         jaasConfig:
-          secretRef: ccloud-credentials
+          secretRef: ccloud-creds
       tls:
         enabled: true
         ignoreTrustStoreConfig: true
@@ -32,4 +35,86 @@ spec:
       authentication:
         type: basic
         basic:
-          secretRef: ccloud-sr-credentials
+          secretRef: ccloud-sr-creds
+  mountedSecrets:
+  - secretRef: conn-license
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: Connect
+metadata:
+  name: connect-1
+spec:
+  podTemplate:
+    labels:
+      appName: splunk-connect
+  replicas: 1
+  image:
+    application: confluentinc/cp-server-connect:7.8.0
+    init: confluentinc/confluent-init-container:2.10.0
+  build:
+    type: onDemand
+    onDemand:
+      plugins:
+        locationType: confluentHub
+        confluentHub:
+        - name: kafka-connect-splunk-s2s
+          owner: confluentinc
+          version: 2.1.1
+  dependencies:
+    kafka:
+      bootstrapEndpoint: <BOOTSTRAP_URL>
+      authentication:
+        type: plain
+        jaasConfig:
+          secretRef: ccloud-creds
+      tls:
+        enabled: true
+        ignoreTrustStoreConfig: true
+    schemaRegistry:
+      url: <SCHEMA_REGISTRY_URL>
+      authentication:
+        type: basic
+        basic:
+          secretRef: ccloud-sr-creds
+  mountedSecrets:
+  - secretRef: conn-license
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: Connect
+metadata:
+  name: connect-2
+spec:
+  podTemplate:
+    labels:
+      appName: splunk-connect
+  replicas: 1
+  image:
+    application: confluentinc/cp-server-connect:7.8.0
+    init: confluentinc/confluent-init-container:2.10.0
+  build:
+    type: onDemand
+    onDemand:
+      plugins:
+        locationType: confluentHub
+        confluentHub:
+        - name: kafka-connect-splunk-s2s
+          owner: confluentinc
+          version: 2.1.1
+  dependencies:
+    kafka:
+      bootstrapEndpoint: <BOOTSTRAP_URL>
+      authentication:
+        type: plain
+        jaasConfig:
+          secretRef: ccloud-creds
+      tls:
+        enabled: true
+        ignoreTrustStoreConfig: true
+    schemaRegistry:
+      url: <SCHEMA_REGISTRY_URL>
+      authentication:
+        type: basic
+        basic:
+          secretRef: ccloud-sr-creds
+  mountedSecrets:
+  - secretRef: conn-license

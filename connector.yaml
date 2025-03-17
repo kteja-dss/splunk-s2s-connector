@@ -1,0 +1,86 @@
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: splunk-s2s-source-0
+  namespace: confluent
+spec:
+  class: "io.confluent.connect.splunk.s2s.SplunkS2SSourceConnector"
+  taskMax: 1
+  connectClusterRef:
+    name: connect-0
+  configs:
+    kafka.topic: "<TOPIC_NAME>"
+    key.converter: "org.apache.kafka.connect.storage.StringConverter"
+    value.converter: "org.apache.kafka.connect.json.JsonConverter"
+    value.converter.schemas.enable: "false"
+    splunk.s2s.behavior.on.error: "log"
+    splunk.s2s.compression.enable: "true"
+    value.converter.basic.auth.credentials.source: "USER_INFO"
+    confluent.topic.replication.factor: "1"
+    confluent.topic.bootstrap.servers: "<BOOTSTRAP_URL>"
+    confluent.topic.security.protocol: "SASL_SSL"
+    splunk.s2s.record.format: "hec"
+    splunk.s2s.ack.enable: "true"
+    confluent.topic.sasl.mechanism: "PLAIN"
+    confluent.topic.sasl.jaas.config: "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"<BOOTSTRAP_KAFKA_API_KEY>\" password=\"<BOOTSTRAP_KAFKA_API_SECRET>\";"
+    confluent.license: ${file:/mnt/secrets/conn-license/connector-license.txt:license}
+---
+
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: splunk-s2s-source-1
+  namespace: confluent
+spec:
+  class: "io.confluent.connect.splunk.s2s.SplunkS2SSourceConnector"
+  taskMax: 1
+  connectClusterRef:
+    name: connect-1
+  configs:
+    kafka.topic: "<TOPIC_NAME>"
+    key.converter: "org.apache.kafka.connect.storage.StringConverter"
+    value.converter: "org.apache.kafka.connect.json.JsonConverter"
+    value.converter.schemas.enable: "false"
+    splunk.s2s.behavior.on.error: "log"
+    splunk.s2s.compression.enable: "true"
+    value.converter.basic.auth.credentials.source: "USER_INFO"
+    confluent.topic.replication.factor: "1"
+    confluent.topic.bootstrap.servers: "<BOOTSTRAP_URL>"
+    confluent.topic.security.protocol: "SASL_SSL"
+    splunk.s2s.record.format: "hec"
+    splunk.s2s.ack.enable: "true"
+    confluent.topic.sasl.mechanism: "PLAIN"
+    confluent.topic.sasl.jaas.config: "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"<BOOTSTRAP_KAFKA_API_KEY>\" password=\"<BOOTSTRAP_KAFKA_API_SECRET>\";"
+    confluent.license: ${file:/mnt/secrets/conn-license/connector-license.txt:license}
+---
+
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: splunk-s2s-source-2
+  namespace: confluent
+spec:
+  class: "io.confluent.connect.splunk.s2s.SplunkS2SSourceConnector"
+  taskMax: 1
+  connectClusterRef:
+    name: connect-2
+  configs:
+    kafka.topic: "<TOPIC_NAME>"
+    key.converter: "org.apache.kafka.connect.storage.StringConverter"
+    value.converter: "org.apache.kafka.connect.json.JsonConverter"
+    value.converter.schemas.enable: "false"
+    splunk.s2s.behavior.on.error: "log"
+    splunk.s2s.compression.enable: "true"
+    value.converter.basic.auth.credentials.source: "USER_INFO"
+    confluent.topic.replication.factor: "1"
+    confluent.topic.bootstrap.servers: "<BOOTSTRAP_URL>"
+    confluent.topic.security.protocol: "SASL_SSL"
+    splunk.s2s.record.format: "hec"
+    confluent.topic.sasl.mechanism: "PLAIN"
+    splunk.s2s.ack.enable: "true"
+    confluent.topic.sasl.jaas.config: "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"<BOOTSTRAP_KAFKA_API_KEY>\" password=\"<BOOTSTRAP_KAFKA_API_SECRET>\";"
+    confluent.license: ${file:/mnt/secrets/conn-license/connector-license.txt:license}
+---
+
+

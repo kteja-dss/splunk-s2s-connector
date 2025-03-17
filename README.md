@@ -44,22 +44,35 @@ The following prerequisites are assumed for each scenario workflow:
 - Clone this repo "https://github.com/kteja-dss/splunk-s2s-connector/edit/main/README.md"
 - Open terminal in the repo directory
 - Update the credentials in the files ccloud-credentials.txt and ccloud-sr-credentials.txt
-- Create secrets for cloud and connect
+- Create secrets for cloud, sr and connect license
 
   ```
    kubectl create secret generic ccloud-credentials --from-file=plain.txt=ccloud-credentials.txt
   ```
 
-  ```
-   kubectl create secret generic ccloud-credentials --from-file=plain.txt=ccloud-sr-credentials.txt
-  ```
+```
+kubectl create secret generic ccloud-sr-credentials --from-file=basic.txt=ccloud-sr-credentials.txt
+```
 
-- Change the [CONFLUENT_CLOUD_BOOTSTRAP_SERVER] and [SCHEMA_REGISTRY_URL] properties in the [connect.yaml] file with your boostratp server
+```
+kubectl create secret generic conn-license \
+  --from-file=connector-license.txt=./license.txt \
+  --namespace confluent
+```
+
+- Change the [BOOTSTRAP_URL] and [SCHEMA_REGISTRY_URL] properties in the [connect.yaml] file with your boostratp server
 - Apply the connect cluster CRD using the below command
+
   ```
   kubectl apply -f connect.yaml
   ```
-- Portforward the connector to send the api request
+
+- Apply the connector CRD using the below command
+  ```
+  kubectl apply -f connector.yaml
+  ```
+  OR
+- Portforward the connect cluster to send the api request to create the connector
   ```
   kubectl port-forward connect-0 8083
   ```
@@ -82,6 +95,8 @@ The following prerequisites are assumed for each scenario workflow:
     "confluent.topic.bootstrap.servers": "<BOOTSTRAP_END_POINT>",
     "confluent.topic.security.protocol": "SASL_SSL",
     "confluent.topic.sasl.mechanism": "PLAIN",
+    "splunk.s2s.compression.enable": "true",
+    "splunk.s2s.ack.enable": "true",
     "confluent.topic.sasl.jaas.config": "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"<BOOTSTRAP_SERVER_API_KEY\" password=\"<BOOTSTRAP_SERVER_API_SECRET\";",
   }' \
   http://localhost:8083/connectors/splunk-s2s-source/config | jq .
@@ -89,9 +104,31 @@ The following prerequisites are assumed for each scenario workflow:
   ```
 
 - Check the status of the connector and also check the data in the topic created on the Confluent Cloud
+
   ```
   http://localhost:8083/connectors/splunk-s2s-source/status
   ```
+
+- Create the loadbalance service for all our connect clusters
+  ```
+  kubectl apply -f connect-service.yaml
+  ```
+- Port forward the loadbalancer
+
+```
+kubectl port-forward svc/splunk-s2s-kafka-connect-lb 9997:9997
+```
+
+- Download the splunk instance and configure your stanza to forward the traffic to the loadbalancer
+
+```
+https://www.splunk.com/en_us/download.html
+```
+
+- Configure the the stanzas accordingly, for a reference you can see those files in this repo
+
+## For Universal forwarder
+
 - Run Splunk forwarder docker image
   ```
   docker run -d -p 9998:9997 -e "SPLUNK_START_ARGS=--accept-license" -e "SPLUNK_PASSWORD=password" --name splunk-uf splunk/universalforwarder:9.0.0
@@ -120,5 +157,5 @@ The following prerequisites are assumed for each scenario workflow:
 
   - For Linux systems:
     ```
-    docker exec -it splunk-uf sudo ./bin/splunk add forward-server 172.17.0.1:9997
+    docker exec -it splunk-uf sudo ./bin/splunk add forward-server localhost:9997
     ```
