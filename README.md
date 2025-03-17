@@ -53,12 +53,13 @@ The following prerequisites are assumed for each scenario workflow:
   ```
   kubectl create secret generic ccloud-sr-credentials --from-file=basic.txt=ccloud-sr-credentials.txt
   ```
-
-  ```
-  kubectl create secret generic conn-license \
-    --from-file=connector-license.txt=./license.txt \
-    --namespace confluent
-  ```
+  
+Replace your license key with <YOUR_ENTERPRISE_LICENSE_KEY> in the license.txt and store it as a secret
+    ```
+    kubectl create secret generic conn-license \
+      --from-file=connector-license.txt=./license.txt \
+      --namespace confluent
+    ```
 
 - Change the [BOOTSTRAP_URL] and [SCHEMA_REGISTRY_URL] properties in the [connect.yaml] file with your boostratp server
 - Apply the connect cluster CRD using the below command
