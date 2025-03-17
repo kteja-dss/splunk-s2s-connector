@@ -2,7 +2,7 @@
 
 More info can be found on [Confluent for Kubernetes documentation](https://docs.confluent.io/operator/current/overview.html).
 
-This repository contains simple schenario and can be customised with respect to the prod requirements
+This repository contains simple schenario and can be customised with respect to the prod requirements after testing
 
 ## Prerequisites
 
@@ -41,7 +41,7 @@ The following prerequisites are assumed for each scenario workflow:
 
 # Next Steps
 
-- Clone this repo "https://github.com/kteja-dss/splunk-s2s-connector/edit/main/README.md"
+- Clone this repo "https://github.com/kteja-dss/splunk-s2s-connector.git"
 - Open terminal in the repo directory
 - Update the credentials in the files ccloud-credentials.txt and ccloud-sr-credentials.txt
 - Create secrets for cloud, sr and connect license
@@ -50,15 +50,15 @@ The following prerequisites are assumed for each scenario workflow:
    kubectl create secret generic ccloud-credentials --from-file=plain.txt=ccloud-credentials.txt
   ```
 
-```
-kubectl create secret generic ccloud-sr-credentials --from-file=basic.txt=ccloud-sr-credentials.txt
-```
+  ```
+  kubectl create secret generic ccloud-sr-credentials --from-file=basic.txt=ccloud-sr-credentials.txt
+  ```
 
-```
-kubectl create secret generic conn-license \
-  --from-file=connector-license.txt=./license.txt \
-  --namespace confluent
-```
+  ```
+  kubectl create secret generic conn-license \
+    --from-file=connector-license.txt=./license.txt \
+    --namespace confluent
+  ```
 
 - Change the [BOOTSTRAP_URL] and [SCHEMA_REGISTRY_URL] properties in the [connect.yaml] file with your boostratp server
 - Apply the connect cluster CRD using the below command
@@ -67,7 +67,7 @@ kubectl create secret generic conn-license \
   kubectl apply -f connect.yaml
   ```
 
-- Apply the connector CRD using the below command
+- Change the configs like bootstra [<BOOTSTRAP_URL>] [BOOTSTRAP_KAFKA_API_KEY] [BOOTSTRAP_KAFKA_API_SECRET] and apply the connector CRD using the below command
   ```
   kubectl apply -f connector.yaml
   ```
