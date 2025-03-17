@@ -72,12 +72,15 @@ Replace your license key with <YOUR_ENTERPRISE_LICENSE_KEY> in the license.txt a
   ```
   kubectl apply -f connector.yaml
   ```
-  OR
+  ### OR
 - Portforward the connect cluster to send the api request to create the connector
   ```
-  kubectl port-forward connect-0 8083
+  kubectl port-forward connect-0-0 8083
+  kubectl port-forward connect-0-1 8084
+  kubectl port-forward connect-0-2 8085
+
   ```
-- Setup the connector by sending a post request using the following command
+- Setup the connector by sending a post request using the following command for all the three connect clusters
 
   ```
   curl -X PUT \
