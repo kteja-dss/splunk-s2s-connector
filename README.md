@@ -118,6 +118,7 @@ kubectl create secret generic conn-license \
 ```
 kubectl port-forward svc/splunk-s2s-kafka-connect-lb 9997:9997
 ```
+## For Heavy forwarder
 
 - Download the splunk instance and configure your stanza to forward the traffic to the loadbalancer
 
@@ -126,6 +127,8 @@ https://www.splunk.com/en_us/download.html
 ```
 
 - Configure the the stanzas accordingly, for a reference you can see those files in this repo
+  ``inputs.conf `` and ``outputs.conf``
+  
 
 ## For Universal forwarder
 
