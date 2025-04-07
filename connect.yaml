@@ -35,7 +35,7 @@ spec:
       authentication:
         type: basic
         basic:
-          secretRef: ccloud-sr-creds
+          secretRef: ccloud-sr-credentials
   mountedSecrets:
   - secretRef: conn-license
 ---
@@ -75,7 +75,7 @@ spec:
       authentication:
         type: basic
         basic:
-          secretRef: ccloud-sr-creds
+          secretRef: ccloud-sr-credentials
   mountedSecrets:
   - secretRef: conn-license
 ---
@@ -115,6 +115,6 @@ spec:
       authentication:
         type: basic
         basic:
-          secretRef: ccloud-sr-creds
+          secretRef: ccloud-sr-credentials
   mountedSecrets:
   - secretRef: conn-license
