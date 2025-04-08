@@ -21,7 +21,7 @@ spec:
     confluent.topic.bootstrap.servers: "<BOOTSTRAP_URL>"
     confluent.topic.security.protocol: "SASL_SSL"
     splunk.s2s.record.format: "hec"
-    splunk.s2s.ack.enable: "true"
+    splunk.s2s.enable.ack: "true"
     confluent.topic.sasl.mechanism: "PLAIN"
     confluent.topic.sasl.jaas.config: "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"<BOOTSTRAP_KAFKA_API_KEY>\" password=\"<BOOTSTRAP_KAFKA_API_SECRET>\";"
     confluent.license: ${file:/mnt/secrets/conn-license/connector-license.txt:license}
@@ -49,7 +49,7 @@ spec:
     confluent.topic.bootstrap.servers: "<BOOTSTRAP_URL>"
     confluent.topic.security.protocol: "SASL_SSL"
     splunk.s2s.record.format: "hec"
-    splunk.s2s.ack.enable: "true"
+    splunk.s2s.enable.ack: "true"
     confluent.topic.sasl.mechanism: "PLAIN"
     confluent.topic.sasl.jaas.config: "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"<BOOTSTRAP_KAFKA_API_KEY>\" password=\"<BOOTSTRAP_KAFKA_API_SECRET>\";"
     confluent.license: ${file:/mnt/secrets/conn-license/connector-license.txt:license}
@@ -78,7 +78,7 @@ spec:
     confluent.topic.security.protocol: "SASL_SSL"
     splunk.s2s.record.format: "hec"
     confluent.topic.sasl.mechanism: "PLAIN"
-    splunk.s2s.ack.enable: "true"
+    splunk.s2s.enable.ack: "true"
     confluent.topic.sasl.jaas.config: "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"<BOOTSTRAP_KAFKA_API_KEY>\" password=\"<BOOTSTRAP_KAFKA_API_SECRET>\";"
     confluent.license: ${file:/mnt/secrets/conn-license/connector-license.txt:license}
 ---
